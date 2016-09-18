@@ -1,7 +1,7 @@
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import { install } from 'redux-loop';
-
+/*eslint-disable */
 export default function createStore(history, data) {
   const reduxRouterMiddleware = routerMiddleware(history);
 
@@ -37,4 +37,4 @@ export default function createStore(history, data) {
 
   return store;
 }
-
+/*eslint-enable */

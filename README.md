@@ -1,4 +1,4 @@
-Big redux boilerplate template with isomporphic
+Graph
 
 ## install and development
 To start develop, run:

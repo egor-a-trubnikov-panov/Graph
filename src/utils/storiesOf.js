@@ -1,8 +1,10 @@
+/*eslint-disable */
 import React from 'react';
 import { storiesOf, setAddon } from '@kadira/storybook';
 import infoAddon from '@kadira/react-storybook-addon-info';
 import { browserHistory } from 'react-router';
 import { withContext } from 'recompose';
+/*eslint-enable */
 
 const addWithInfo = {
   ...infoAddon,

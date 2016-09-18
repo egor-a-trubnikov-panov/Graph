@@ -31,25 +31,10 @@ const proxy = httpProxy.createProxyServer({
   ws: true
 });
 
-const authUrl = `${config.authServer}`;
-const targetUrlAuth = `${authUrl}/oauth`;
-const proxyAuth = httpProxy.createProxyServer({
-  target: targetUrlAuth,
-  xfwd: false,
-  changeOrigin: true
-});
 
-const apiUrl = `${config.apiServer}`;
-const targetUrlApi = `${apiUrl}/v1`;
+const targetUrlApi = `${config.apiServer}/v1`;
 const proxyApi = httpProxy.createProxyServer({
   target: targetUrlApi,
-  xfwd: false,
-  changeOrigin: true
-});
-
-const targetUrlUpload = `${apiUrl}/upload`;
-const proxyUpload = httpProxy.createProxyServer({
-  target: targetUrlUpload,
   xfwd: false,
   changeOrigin: true
 });
@@ -102,42 +87,11 @@ const errorHandler = (error, req, res) => {
   res.end(JSON.stringify({ error: 'proxy_error', reason: error.message }));
 };
 
-// Proxy to oauth API server
-app.use('/oauth', (req, res) => {
-  proxyAuth.web(req, res, { target: targetUrlAuth });
-});
-proxyAuth.on('error', errorHandler);
-
 // Proxy to API server
 app.use('/v1', (req, res) => {
   proxyApi.web(req, res, { target: targetUrlApi });
 });
 proxyApi.on('error', errorHandler);
-
-// Proxy to API server
-app.use('/api', (req, res) => {
-  proxy.web(req, res, { target: targetUrl });
-});
-proxy.on('error', errorHandler);
-
-// Proxy to Upload server
-app.use('/upload', (req, res) => {
-  proxyUpload.web(req, res, { target: targetUrlUpload });
-});
-proxyUpload.on('error', errorHandler);
-
-// Proxy to Upload server
-app.use('/home/relefopt/beta.relefopt.ru/www/upload/', (req, res) => {
-  proxyUpload.web(req, res, { target: targetUrlUpload });
-});
-
-app.use('/ws', (req, res) => {
-  proxy.web(req, res, { target: `${targetUrl}/ws` });
-});
-
-server.on('upgrade', (req, socket, head) => {
-  proxy.ws(req, socket, head);
-});
 
 // added the error handling to avoid https://github.com/nodejitsu/node-http-proxy/issues/527
 proxy.on('error', errorHandler);

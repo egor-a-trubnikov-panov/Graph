@@ -19,7 +19,7 @@ export default Object.assign({
     client_secret: 'e4c25cec64c71d10001ae4c768fb9fc76c5191be'
   },
   authServer: 'http://connect.4redux.ru',
-  apiServer: 'http://api.4redux.ru',
+  apiServer: 'https://query.yahooapis.com',
   app: {
     title: '4redux',
     description: 'redux boilerplate',

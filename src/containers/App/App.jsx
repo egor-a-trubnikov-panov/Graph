@@ -1,31 +1,45 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes as pt } from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { asyncConnect } from 'redux-async-connect';
-import config from '../../config';
+import Select from '../../components/Sellect';
+import LineChart from '../../components/LineChart';
+import BarChart from '../../components/BarChart';
+import Link from '../../components/Link';
+import { setCourse } from '../../redux/modules/cource';
 
-import styles from './App.styl';
-
-@asyncConnect([{
-  promise: () => new Promise(resolve => resolve())
-}])
 @connect(
-  ({ settings }) => ({
-    settings
+  ({ settings, course }) => ({
+    settings, course
   })
 )
 class App extends Component {
   static propTypes = {
-    children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)])
+    children: pt.oneOfType([pt.node, pt.arrayOf(pt.node)]),
+    course: pt.object,
+    dispatch: pt.func
+  };
+
+  handleChange = value => {
+    const { dispatch } = this.props;
+    dispatch(setCourse(value));
   };
 
   render() {
-    const { children } = this.props;
-
+    const { course: { rateList = [], rateHistoryMap = {}, rateBarList = [], selectedValue = '' } } = this.props;
     return (
-      <div className={styles.app}>
-        <Helmet {...config.app.head} />
-        {children}
+      <div>
+        <Select
+          selectedValue={selectedValue}
+          onChange={this.handleChange}
+          value={rateList}
+        />
+        <LineChart
+          data={rateHistoryMap[selectedValue]}
+        />
+        <Link href='/detail'>Подробно</Link>
+        <BarChart
+          yAxisLabel='RUB'
+          data={rateBarList}
+        />
       </div>
     );
   }

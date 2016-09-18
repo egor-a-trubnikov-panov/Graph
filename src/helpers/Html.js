@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable */
 import React, { Component, PropTypes } from 'react';
 import { renderToString } from 'react-dom/server';
 import serialize from 'serialize-javascript';
@@ -42,9 +42,9 @@ const Html = ({ assets, component, store }) => {
         )}
       </head>
       <body>
-        <div id='content' dangerouslySetInnerHTML={{ __html: content }} ></div>
-        <script dangerouslySetInnerHTML={{ __html: `window.__data=${serialize(store.getState())};` }} charSet='UTF-8' ></script>
-        <script src={assets.javascript.main} charSet='UTF-8' ></script>
+        <div id='content' dangerouslySetInnerHTML={{ __html: content }} />
+        <script dangerouslySetInnerHTML={{ __html: `window.__data=${serialize(store.getState())};` }} charSet='UTF-8' />
+        <script src={assets.javascript.main} charSet='UTF-8' />
       </body>
     </html>
   );

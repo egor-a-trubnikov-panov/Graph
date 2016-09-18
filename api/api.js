@@ -5,7 +5,7 @@ import methodOverride from 'method-override';
 import PrettyError from 'pretty-error';
 import http from 'http';
 import SocketIo from 'socket.io';
-import { mapUrl } from './utils/url';
+import mapUrl from './utils/url';
 import * as actions from './actions/index';
 import config from '../src/config';
 

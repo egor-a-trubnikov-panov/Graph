@@ -1,6 +1,7 @@
 /**
  * ENTRY POINT FOR THE CLIENT
  */
+/* eslint-disable */
 import 'babel-polyfill';
 import React from 'react';
 import { render } from 'react-dom';
