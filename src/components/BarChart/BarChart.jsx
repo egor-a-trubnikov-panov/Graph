@@ -43,7 +43,6 @@ export default class BarChart extends Component {
         height={isBrowser ? window.innerHeight / 2 : 450}
         width={isBrowser ? window.innerWidth : 1440}
       />
-    )
-      ;
+    );
   }
 }
