@@ -47,6 +47,20 @@ function saveRateHistoryMap(rateHistoryMap) {
   }
 }
 
+function getSelectedValue() {
+  if (isBrowser) {
+    return window.localStorage.getItem('selectedValue') || 'USD/RUB';
+  }
+  return {};
+}
+
+function saveSelectedValue(selectedValue) {
+  if (isBrowser) {
+    window.localStorage.setItem('selectedValue', selectedValue);
+  }
+  return selectedValue;
+}
+
 function buildRateObject(oldRateHistoryMap, rate) {
   const newRateObjects = {
     rateList: [],
@@ -74,6 +88,7 @@ const handleGet = state =>
     {
       ...state,
       rateHistoryMap: getRateHistoryMap(),
+      selectedValue: getSelectedValue(),
       isLoading: true,
       isLoaded: false
     },
@@ -96,7 +111,7 @@ const handleGetFailure = state => ({
 
 const handleSetCourse = (state, value) => ({
   ...state,
-  selectedValue: value
+  selectedValue: saveSelectedValue(value)
 });
 
 const reducer = createReducer(on => {
