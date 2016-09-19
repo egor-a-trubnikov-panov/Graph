@@ -17,10 +17,7 @@ export default class Sellect extends Component {
     selectedValue: ''
   };
 
-  renderOptions = item => {
-    const { selectedValue } = this.props;
-    return <option selected={(selectedValue === item)} key={item} value={item}>{item}</option>;
-  };
+  renderOptions = item => (<option key={item} value={item}>{item}</option>);
 
   handleChange = event => {
     const { onChange } = this.props;

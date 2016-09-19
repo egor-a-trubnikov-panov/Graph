@@ -6,7 +6,8 @@ export default class Link extends Component {
   static propTypes = {
     mode: pt.oneOf(['default']),
     children: pt.oneOfType([pt.node, pt.arrayOf(pt.node), pt.string]),
-    href: pt.string
+    href: pt.string,
+    className: pt.string
   };
 
   static defaultProps = {
@@ -16,12 +17,12 @@ export default class Link extends Component {
   };
 
   render() {
-    const { mode, children, href } = this.props;
+    const { mode, children, href, className } = this.props;
     return (
       <a
         href={href}
         className={
-          cx(styles[`mode_${mode}`], styles.Link, {})
+          cx(styles[`mode_${mode}`], styles.Link, className, {})
         }
       >
         {children}

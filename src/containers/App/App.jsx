@@ -5,6 +5,7 @@ import LineChart from '../../components/LineChart';
 import BarChart from '../../components/BarChart';
 import Link from '../../components/Link';
 import { setCourse } from '../../redux/modules/cource';
+import styles from './App.styl';
 
 @connect(
   ({ settings, course }) => ({
@@ -35,7 +36,9 @@ class App extends Component {
         <LineChart
           data={rateHistoryMap[selectedValue]}
         />
-        <Link href='/detail'>Подробно</Link>
+        <div className={styles.linkWrapper}>
+          <Link href='/detail'>Подробно</Link>
+        </div>
         <BarChart
           yAxisLabel='RUB'
           data={rateBarList}

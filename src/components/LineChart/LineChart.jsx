@@ -34,7 +34,6 @@ export default class LineChart extends Component {
           domain={domain}
         />
         <VictoryLine
-          animate={false}
           data={data}
         />
         <VictoryScatter
