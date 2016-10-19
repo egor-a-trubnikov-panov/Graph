@@ -1,32 +1,17 @@
-import React, { Component, PropTypes as pt } from 'react';
-import cx from 'classnames';
-import styles from './Link.styl';
+import React, { Component, PropTypes as pt } from 'react'
+import { Link as RouterLink } from 'react-router'
+import cx from 'classnames'
+import styles from './Link.styl'
 
-export default class Link extends Component {
-  static propTypes = {
-    mode: pt.oneOf(['default']),
-    children: pt.oneOfType([pt.node, pt.arrayOf(pt.node), pt.string]),
-    href: pt.string,
-    className: pt.string
-  };
-
-  static defaultProps = {
-    mode: 'default',
-    children: 'Ссылка',
-    href: '#'
-  };
-
-  render() {
-    const { mode, children, href, className } = this.props;
-    return (
-      <a
-        href={href}
-        className={
-          cx(styles[`mode_${mode}`], styles.Link, className, {})
-        }
-      >
-        {children}
-        <span className={styles.icon}>
+const Link = ({ children, mode, href, className }) => (
+  <RouterLink
+    to={href}
+    className={
+      cx(styles[`mode_${mode}`], styles.Link, className, {})
+    }
+  >
+    {children}
+    <span className={styles.icon}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             viewBox='0 0 20 20'
@@ -43,7 +28,20 @@ export default class Link extends Component {
             />
           </svg>
         </span>
-      </a>
-    );
-  }
-}
+  </RouterLink>
+);
+
+Link.propTypes = {
+  mode: pt.oneOf(['default']),
+  children: pt.oneOfType([pt.node, pt.arrayOf(pt.node), pt.string]),
+  href: pt.string,
+  className: pt.string
+};
+
+Link.defaultProps = {
+  mode: 'default',
+  children: 'Ссылка',
+  href: '#'
+};
+
+export default Link;

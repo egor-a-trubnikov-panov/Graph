@@ -29,7 +29,7 @@ var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.developmen
 var combinedPlugins = babelrcObject.plugins || [];
 combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins);
 
-var babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject, {plugins: combinedPlugins});
+var babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject, { plugins: combinedPlugins });
 delete babelLoaderQuery.env;
 babelLoaderQuery.cacheDirectory = true;
 
@@ -47,12 +47,12 @@ for (var i = 0; i < babelLoaderQuery.plugins.length; ++i) {
 }
 
 if (!reactTransform) {
-  reactTransform = ['react-transform', {transforms: []}];
+  reactTransform = ['react-transform', { transforms: [] }];
   babelLoaderQuery.plugins.push(reactTransform);
 }
 
 if (!reactTransform[1] || !reactTransform[1].transforms) {
-  reactTransform[1] = Object.assign({}, reactTransform[1], {transforms: []});
+  reactTransform[1] = Object.assign({}, reactTransform[1], { transforms: [] });
 }
 
 // make sure react-transform-hmr is enabled
@@ -63,13 +63,12 @@ reactTransform[1].transforms.push({
 });
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: '#inline-source-map',
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [
-      './src/theme/optimize.js',
+      'theme/optimize.js',
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
-      'font-awesome-webpack!./src/theme/font-awesome.config.js',
       './src/client.js',
     ]
   },
@@ -81,11 +80,13 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel', query: babelLoaderQuery},
+      { test: /\.jsx?$/, exclude: /node_modules/, loader: 'babel', query: babelLoaderQuery },
       { test: /\.json$/, loader: 'json' },
-      { test: /\.styl$/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!stylus?outputStyle=expanded&sourceMap' },
-      { test: /\.less$/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!less?outputStyle=expanded&sourceMap' },
-      { test: /\.scss$/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
+      {
+        test: /\.styl$/,
+        exclude: /node_modules/,
+        loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer!stylus?outputStyle=expanded&sourceMap'
+      },
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
@@ -94,24 +95,20 @@ module.exports = {
       { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' }
     ]
   },
-  progress: false,
   resolve: {
     modules: [
+      'src',
       'node_modules'
     ],
     // TODO eslint-plugin-resole-webpack not support webpack@2 `resolve.modules` path
     // https://github.com/benmosher/eslint-plugin-import/pull/319
     // Waiting for merge this PR or webpack-2 resolver will be implemented as plugin
-    modulesDirectories: [
-      'node_modules'
-    ],
-    extensions: ['', '.json', '.js', '.jsx']
+    extensions: ['.json', '.js', '.jsx']
   },
   plugins: [
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.IgnorePlugin(/webpack-stats\.json$/),
-    new webpack.ProgressPlugin(),
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,

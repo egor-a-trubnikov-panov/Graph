@@ -1,57 +1,53 @@
-import React, { Component, PropTypes as pt } from 'react';
-import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTheme } from 'victory';
+import React, { Component, PropTypes as pt } from 'react'
+import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTheme } from 'victory'
 
 const isBrowser = typeof window !== 'undefined';
 
-export default class LineChart extends Component {
-  static propTypes = {
-    data: pt.any,
-    period: pt.any,
-    domain: pt.any
-  };
+const LineChart = ({ data, domain }) => (
+  <VictoryChart
+    height={isBrowser ? window.innerHeight / 2 : 450}
+    width={isBrowser ? window.innerWidth : 1440}
+    theme={VictoryTheme.material}
+    padding={{
+      left: 60,
+      right: 20,
+      top: 20,
+      bottom: 30
+    }}
+  >
+    <VictoryAxis />
+    <VictoryAxis
+      dependentAxis
+      domain={domain}
+    />
+    <VictoryLine
+      data={data}
+    />
+    <VictoryScatter
+      style={{
+        data: {
+          fill: 'tomato'
+        },
+        labels: {
+          fill: 'tomato',
+          fontSize: 10,
+          padding: 2
+        }
+      }}
+      data={data}
+      size={3}
+    />
+  </VictoryChart>
+);
 
-  static defaultProps = {
-    period: 0
-  };
+LineChart.propTypes = {
+  data: pt.any,
+  period: pt.any,
+  domain: pt.any
+};
 
-  render() {
-    const { data, domain } = this.props;
-    return (
-      <VictoryChart
-        height={isBrowser ? window.innerHeight / 2 : 450}
-        width={isBrowser ? window.innerWidth : 1440}
-        theme={VictoryTheme.material}
-        padding={{
-          left: 60,
-          right: 20,
-          top: 20,
-          bottom: 30
-        }}
-      >
-        <VictoryAxis />
-        <VictoryAxis
-          dependentAxis
-          domain={domain}
-        />
-        <VictoryLine
-          data={data}
-        />
-        <VictoryScatter
-          style={{
-            data: {
-              fill: 'tomato'
-            },
-            labels: {
-              fill: 'tomato',
-              fontSize: 10,
-              padding: 2
-            }
-          }}
-          data={data}
-          size={3}
-        />
-      </VictoryChart>
-    );
-  }
-}
+LineChart.defaultProps = {
+  period: 0
+};
 
+export default LineChart;

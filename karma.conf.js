@@ -1,16 +1,15 @@
 var webpack = require('webpack');
 
 module.exports = function (config) {
-  config.set({
+  const conf = {
 
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
     singleRun: !!process.env.CI,
 
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha', 'chai', 'sinon'],
 
     files: [
-      './node_modules/phantomjs-polyfill/bind-polyfill.js',
       'tests.webpack.js'
     ],
 
@@ -23,11 +22,12 @@ module.exports = function (config) {
     coverageReporter: {
       instrumenterOptions: {
         istanbul: {
-          includeAllSources : true
+          includeAllSources: true
         }
       },
       reporters: [
-        { type: 'lcov', subdir: '.' },
+        { type: 'lcovonly', subdir: '.' },
+        { type: 'html', subdir: '.' },
         { type: 'json', subdir: '.' },
         { type: 'text-summary' }
       ]
@@ -36,10 +36,12 @@ module.exports = function (config) {
     plugins: [
       'karma-webpack',
       'karma-chai',
+      'karma-sinon',
       'karma-mocha',
       'karma-coverage',
       'karma-mocha-reporter',
       'karma-phantomjs-launcher',
+      'karma-chrome-launcher',
       'karma-sourcemap-loader'
     ],
 
@@ -89,6 +91,20 @@ module.exports = function (config) {
 
     webpackServer: {
       noInfo: true
+    },
+
+    customLaunchers: {
+      ChromeTravis: {
+        base: 'Chrome',
+        flags: ['--no-sandbox']
+      }
     }
-  });
+
+  };
+
+  if (process.env.TRAVIS) {
+    conf.browsers = ['ChromeTravis'];
+  }
+
+  config.set(conf);
 };
