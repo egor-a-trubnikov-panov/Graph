@@ -1,5 +1,5 @@
-import React, { Component, PropTypes as pt } from 'react'
-import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTheme } from 'victory'
+import React, { Component, PropTypes as pt } from 'react';
+import { VictoryAxis, VictoryChart, VictoryLine, VictoryScatter, VictoryTheme } from 'victory';
 
 const isBrowser = typeof window !== 'undefined';
 

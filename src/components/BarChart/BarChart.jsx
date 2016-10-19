@@ -1,5 +1,5 @@
-import React, { Component, PropTypes as pt } from 'react'
-import rd3 from 'react-d3'
+import React, { Component, PropTypes as pt } from 'react';
+import rd3 from 'react-d3';
 
 const isBrowser = typeof window !== 'undefined';
 

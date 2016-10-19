@@ -68,9 +68,7 @@ storiesOf('LineChart')
         { x: 2015, y: 470 }
       ]}
     />)
-  ).addWithInfo('With interval', () =>
-  (
-    <IntervalLineChart />
   )
-);
-
+  .addWithInfo('With interval', () =>
+    (<IntervalLineChart />)
+  );
